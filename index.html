@@ -6,270 +6,377 @@
     <title>Nankay - Arte en cemento y plantas ornamentales</title>
     <!-- Bootstrap 5.3 CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
-    <!-- Tipografías: Sacramento (la firma de la marca, parecida a la de su portada) + Quicksand (texto redondeado) -->
+    <!-- Tipografías: Sacramento (marca) + Quicksand (texto) -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@500;600;700&family=Sacramento&display=swap" rel="stylesheet">
 
-    <!-- Tema Nankay: verde del logo, rosa cemento de la portada, dorado y kraft de los empaques -->
     <style>
         :root {
-            --bs-dark-rgb: 43, 53, 22;           /* verde oliva profundo */
-            --bs-light-rgb: 229, 220, 214;       /* rosa cemento (fondo de su portada) */
-            --bs-success-rgb: 79, 107, 20;       /* verde hoja para títulos */
-            --bs-warning-rgb: 216, 178, 90;      /* dorado de los detalles de las macetas */
-            --bs-secondary-rgb: 94, 85, 79;      /* gris cálido para párrafos */
-            --bs-tertiary-bg-rgb: 243, 235, 230; /* cemento claro */
-            --bs-body-font-family: 'Quicksand', system-ui, -apple-system, 'Segoe UI', sans-serif;
-            --bs-body-font-weight: 500;
-            --bs-body-line-height: 1.7;
-
-            --nk-olive: #6B8E1F;                 /* verde del logo */
-            --nk-olive-deep: #5A7716;
-            --nk-olive-darker: #46600F;
+            --nk-olive: #6B8E1F;
+            --nk-olive-deep: #4F6B14;
+            --nk-ink: #2B3516;
             --nk-gold: #D8B25A;
             --nk-kraft: #D7B88C;
             --nk-kraft-ink: #4B3516;
+            --nk-cream: #F3EBE6;
+            --nk-muted: #5E554F;
+
+            --bs-body-font-family: 'Quicksand', system-ui, -apple-system, 'Segoe UI', sans-serif;
+            --bs-body-font-weight: 500;
+            --bs-body-line-height: 1.55;
+            --bs-body-color: var(--nk-ink);
         }
 
         html { scroll-behavior: smooth; }
+        @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
 
-        h2, h3, h5 { letter-spacing: -.02em; }
+        body { background: #fff; }
 
-        /* Encabezado: verde del logo con un patrón de hexágonos (como las macetas geométricas) */
+        a:focus-visible, .btn:focus-visible {
+            outline: 3px solid var(--nk-gold);
+            outline-offset: 3px;
+        }
+
+        /* ---------- 1. HEADER ---------- */
         .nk-header {
             background-color: var(--nk-olive);
             background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='56' height='100' viewBox='0 0 56 100'%3E%3Cg fill='none' stroke='%23ffffff' stroke-opacity='.13' stroke-width='1.5'%3E%3Cpath d='M28 66L0 50L0 16L28 0L56 16L56 50L28 66L28 100'/%3E%3Cpath d='M28 0L28 34L0 50L0 84L28 100L56 84L56 50L28 34'/%3E%3C/g%3E%3C/svg%3E");
+            border-bottom: 4px solid var(--nk-gold);
         }
 
-        /* Nombre de la marca en letra manuscrita: escribe "Nankay" aunque el HTML diga NANKAY */
+        .nk-logo {
+            width: 104px;
+            height: 104px;
+            aspect-ratio: 1 / 1;
+            object-fit: cover;
+            border-radius: 50%;
+            border: 4px solid #fff;
+            box-shadow: 0 6px 16px rgba(43, 53, 22, .35);
+        }
+
         .nk-marca {
             font-family: 'Sacramento', cursive;
-            font-weight: 400 !important;
-            font-size: clamp(4.5rem, 20vw, 8rem);
-            line-height: .9;
-            text-transform: lowercase;
-            text-shadow: 0 2px 0 rgba(43, 53, 22, .25);
+            font-weight: 400;
+            font-size: clamp(4rem, 20vw, 6rem);
+            line-height: 1.1;
+            text-shadow: 0 3px 0 rgba(43, 53, 22, .25);
         }
-        .nk-marca::first-letter { text-transform: uppercase; }
 
-        /* Fotos: como impresiones pegadas con cinta de papel kraft */
-        .nk-lado { position: relative; }
-        .nk-lado::before {
-            content: "";
-            position: absolute;
-            top: -12px;
-            left: 50%;
-            width: 92px;
-            height: 26px;
-            transform: translateX(-50%) rotate(-4deg);
-            background: repeating-linear-gradient(45deg, rgba(216,178,90,.78) 0 6px, rgba(226,196,120,.78) 6px 12px);
-            box-shadow: 0 1px 3px rgba(60, 40, 30, .2);
-            z-index: 2;
+        .nk-lema {
+            font-size: 1.05rem;
+            font-weight: 600;
+            letter-spacing: .01em;
         }
-        .nk-lado-b::before { transform: translateX(-50%) rotate(3deg); }
 
-        .nk-foto {
-            width: 100%;
-            aspect-ratio: 4 / 3;
-            object-fit: cover;
-            border: 8px solid #fff;
-            box-shadow: 0 10px 24px rgba(60, 40, 30, .2);
-            transform: rotate(-1.2deg);
-        }
-        .nk-foto-b { transform: rotate(1.2deg); }
-
-        /* Etiqueta tipo "tag" de papel kraft (como las de los recuerdos) */
+        /* ---------- 2. MAIN ---------- */
         .nk-etiqueta {
-            position: relative;
             display: inline-block;
-            padding: .4rem 1rem .4rem 2rem;
+            padding: .45rem 1.4rem;
             background: var(--nk-kraft);
             color: var(--nk-kraft-ink);
+            font-size: 1.15rem;
             font-weight: 700;
-            clip-path: polygon(16px 0, 100% 0, 100% 100%, 16px 100%, 0 50%);
-        }
-        .nk-etiqueta::before {
-            content: "";
-            position: absolute;
-            left: 14px;
-            top: 50%;
-            width: 8px;
-            height: 8px;
-            margin-top: -4px;
-            border-radius: 50%;
-            background: #fff;
+            border-radius: 6px;
         }
 
-        /* Viñetas hexagonales doradas */
-        .nk-lista li { position: relative; padding-left: 1.7rem; }
+        /* Zig-zag */
+        .nk-bloque { padding: 1.75rem 0; border-bottom: 1px solid rgba(94, 85, 79, .12); }
+        .nk-bloque.nk-alt { background: var(--nk-cream); }
+
+        .nk-foto {
+            display: block;
+            width: 100%;
+            max-width: 176px;
+            aspect-ratio: 1 / 1;
+            object-fit: cover;
+            border-radius: 50%;
+            border: 5px solid #fff;
+            box-shadow: 0 0 0 3px var(--nk-gold), 0 10px 22px rgba(60, 40, 30, .22);
+            margin-inline: auto;
+        }
+
+        .nk-titulo {
+            font-size: 1.3rem;
+            font-weight: 700;
+            line-height: 1.25;
+            color: var(--nk-olive-deep);
+            margin: 0;
+        }
+        .nk-titulo::after {
+            content: "";
+            display: block;
+            width: 44px;
+            height: 4px;
+            margin: .7rem auto 0;
+            background: var(--nk-gold);
+            border-radius: 2px;
+        }
+
+        /* Servicios */
+        .nk-lista { display: inline-block; text-align: left; font-size: 1.05rem; }
+        .nk-lista li { position: relative; padding: .35rem 0 .35rem 1.5rem; }
         .nk-lista li::before {
             content: "";
             position: absolute;
             left: 0;
-            top: .62em;
-            width: .85rem;
-            height: .95rem;
+            top: .95em;
+            width: .6rem;
+            height: .6rem;
             background: var(--nk-gold);
-            clip-path: polygon(50% 0, 100% 25%, 100% 75%, 50% 100%, 0 75%, 0 25%);
+            border-radius: 50%;
         }
 
-        /* Mapa más alto en celular para que se pueda usar */
-        .nk-mapa { --bs-aspect-ratio: 75%; }
-        @media (min-width: 768px) {
-            .nk-mapa { --bs-aspect-ratio: 56.25%; }
+        .nk-mapa {
+            border: 4px solid #fff;
+            border-radius: 14px;
+            box-shadow: 0 6px 18px rgba(60, 40, 30, .18);
         }
 
-        /* Botón verde del logo */
-        .btn-success {
-            --bs-btn-bg: var(--nk-olive-deep);
-            --bs-btn-border-color: var(--nk-olive-deep);
-            --bs-btn-hover-bg: var(--nk-olive-darker);
-            --bs-btn-hover-border-color: var(--nk-olive-darker);
-            --bs-btn-active-bg: var(--nk-olive-darker);
-            --bs-btn-active-border-color: var(--nk-olive-darker);
-            --bs-btn-focus-shadow-rgb: 90, 119, 22;
-        }
-
-        /* Campos del formulario */
-        .form-control:focus {
+        /* Formulario */
+        .nk-form .form-label { font-weight: 700; color: var(--nk-olive-deep); margin-bottom: .3rem; }
+        .nk-form .form-control,
+        .nk-form .form-select {
+            font-size: 1rem;
+            border: 2px solid rgba(94, 85, 79, .25);
+            border-radius: 10px;
             background-color: #fff;
-            border-color: var(--nk-olive-deep);
-            box-shadow: 0 0 0 .25rem rgba(90, 119, 22, .25);
         }
+        .nk-form .form-control:focus,
+        .nk-form .form-select:focus {
+            border-color: var(--nk-olive);
+            box-shadow: 0 0 0 .25rem rgba(107, 142, 31, .25);
+        }
+        .nk-btn-enviar {
+            background: var(--nk-olive);
+            color: #fff;
+            font-weight: 700;
+            border-radius: 10px;
+            border-bottom: 4px solid var(--nk-gold);
+        }
+        .nk-btn-enviar:hover { background: var(--nk-olive-deep); color: #fff; }
+
+        /* ---------- 3. FOOTER ---------- */
+        .nk-footer {
+            background: var(--nk-ink);
+            border-top: 4px solid var(--nk-gold);
+            color: #fff;
+        }
+        .nk-btn-wa {
+            background: #25D366;
+            color: #0B3D1E;
+            font-weight: 700;
+        }
+        .nk-btn-wa:hover { background: #1fb957; color: #0B3D1E; }
+        .nk-btn-fb {
+            border: 2px solid var(--nk-gold);
+            color: #fff;
+            font-weight: 700;
+        }
+        .nk-btn-fb:hover { background: var(--nk-gold); color: var(--nk-ink); }
     </style>
 </head>
 
-<body class="bg-light text-dark">
+<body>
 
-    <div class="container my-md-4 shadow-sm bg-white overflow-hidden">
+    <!-- ============ CONTENEDOR 1: HEADER ============ -->
+    <header class="nk-header text-white text-center">
+        <div class="container py-4">
+            <img src="images/logo.jpg" alt="Logo Nankay" class="nk-logo mb-2" width="104" height="104">
+            <h1 class="nk-marca mb-0">Nankay</h1>
+            <p class="nk-lema mb-0">Tú imaginas, nosotros lo creamos.</p>
+        </div>
+    </header>
 
-        <!-- 1. ENCABEZADO (HEADER) -->
-        <header class="row align-items-center nk-header text-white px-3 py-5 p-md-5 border-bottom border-warning border-4">
-            <div class="col-md-4 text-center text-md-start mb-3 mb-md-0">
-                <img src="images/logo.jpg" alt="Logo de Nankay" class="img-fluid rounded-4 shadow border border-4 border-white" style="max-height: 140px;">
-            </div>
-            <div class="col-md-8 text-center text-md-start">
-                <h1 class="nk-marca mb-2 text-white">NANKAY</h1>
-                <p class="fs-4 fw-semibold text-white mb-0">Tú imaginas, nosotros lo creamos.</p>
-            </div>
-        </header>
+    <!-- ============ CONTENEDOR 2: MAIN ============ -->
+    <main>
+        <div class="container px-0">
 
-        <!-- 2. BANNER / BIENVENIDA (Imagen Izquierda - Texto Derecha) -->
-        <section class="row align-items-center px-3 py-5 p-md-5">
-            <div class="col-md-5 mb-5 mb-md-0 text-center nk-lado">
-                <img src="images/bienvenida.jpg" alt="Macetas de cemento hechas a mano con suculentas, por Nankay" class="img-fluid rounded-1 nk-foto">
-            </div>
-            <div class="col-md-7 ps-md-5">
-                <span class="nk-etiqueta mb-3 small">Bienvenidos a Nankay</span>
-                <h2 class="display-5 fw-bold mb-3 text-dark">Arte y Naturaleza en un solo lugar</h2>
-                <p class="lead text-secondary mb-0">
-                    Nos especializamos en la elaboración artesanal de piezas únicas en cemento combinadas con hermosas plantas ornamentales para llenar tus espacios de vida y elegancia.
-                </p>
-            </div>
-        </section>
+            <!-- Título de sección -->
+            <section class="text-center px-3 py-4 border-bottom">
+                <h2 class="nk-etiqueta mb-0">Nuestros productos</h2>
+            </section>
 
-        <!-- 3. SECCIÓN RECUERDOS (Texto Izquierda - Imagen Derecha) -->
-        <section class="row align-items-center px-3 py-5 p-md-5 bg-body-tertiary">
-            <div class="col-md-7 order-2 order-md-1 pe-md-5">
-                <h2 class="fw-bold text-success mb-3">Recuerdos Vivos que Perduran</h2>
-                <p class="fs-5 text-secondary">
-                    Transforma tu evento en un momento inolvidable con nuestras macetas artesanales y suculentas. Un souvenir lleno de vida, diseñado a mano para agradecer a quienes te acompañan.
-                </p>
-                <p class="fw-bold text-dark fs-5 mb-0">
-                    El detalle perfecto para tu celebración (Bodas, Bautizos, Eventos Corporativos).
-                </p>
-            </div>
-            <div class="col-md-5 order-1 order-md-2 mb-5 mb-md-0 text-center nk-lado nk-lado-b">
-                <img src="images/recuerdos.jpg" alt="Recuerdos para eventos: macetas geométricas de cemento con suculentas y tarjeta personalizada" class="img-fluid rounded-1 nk-foto nk-foto-b">
-            </div>
-        </section>
-
-        <!-- 4. SECCIÓN MACETAS ARTESANALES (Imagen Izquierda - Texto Derecha) -->
-        <section class="row align-items-center px-3 py-5 p-md-5">
-            <div class="col-md-5 mb-5 mb-md-0 text-center nk-lado">
-                <img src="images/maseta.jpg" alt="Macetas geométricas de cemento pintadas a mano" class="img-fluid rounded-1 nk-foto">
-            </div>
-            <div class="col-md-7 ps-md-5">
-                <h2 class="fw-bold text-dark mb-3">Macetas en Cemento Moldeadas a Mano</h2>
-                <p class="fs-5 text-secondary">
-                    Cada una de nuestras macetas es trabajada con dedicación, garantizando resistencia, texturas modernas y acabados únicos que destacan en cualquier rincón del hogar u oficina.
-                </p>
-                <ul class="list-unstyled fs-6 mb-0 nk-lista">
-                    <li class="py-1">Diseños geométricos y personalizados.</li>
-                    <li class="py-1">Alta durabilidad y resistencia.</li>
-                    <li class="py-1">Variedad de colores y pigmentaciones naturales.</li>
-                </ul>
-            </div>
-        </section>
-
-        <!-- 5. SECCIÓN PLANTAS ORNAMENTALES (Texto Izquierda - Imagen Derecha) -->
-        <section class="row align-items-center px-3 py-5 p-md-5 bg-body-tertiary">
-            <div class="col-md-7 order-2 order-md-1 pe-md-5">
-                <h2 class="fw-bold text-success mb-3">Plantas Ornamentales y Suculentas</h2>
-                <p class="fs-5 text-secondary">
-                    Contamos con una variada selección de plantas adaptadas para interiores y exteriores. Seleccionadas minuciosamente para garantizar su salud y belleza.
-                </p>
-                <p class="fs-6 mb-0">
-                    Ofrecemos asesoramiento personalizado para el cuidado de cada especie, ideal tanto para principiantes como para coleccionistas.
-                </p>
-            </div>
-            <div class="col-md-5 order-1 order-md-2 mb-5 mb-md-0 text-center nk-lado nk-lado-b">
-                <img src="images/plantas.jpg" alt="Cactus y suculentas en macetas de cemento" class="img-fluid rounded-1 nk-foto nk-foto-b">
-            </div>
-        </section>
-
-        <!-- 6. SECCIÓN UBICACIÓN Y FORMULARIO DE CONTACTO -->
-        <section class="row px-3 py-5 p-md-5">
-            <!-- Columna Google Maps -->
-            <div class="col-md-6 mb-5 mb-md-0">
-                <h3 class="fw-bold mb-3 text-dark">Nuestra Ubicación</h3>
-                <div class="ratio ratio-16x9 nk-mapa rounded-1 overflow-hidden shadow border border-4 border-white">
-                    <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3989.3177719442842!2d-78.59667092550083!3d-0.9075877990836217!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x91d461bd1d43a1bb%3A0x2e0b77284ded7ca6!2sNankay%20-%20Arte%20en%20cemento!5e0!3m2!1ses-419!2sec!4v1792603629685!5m2!1ses-419!2sec" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="strict-origin-when-cross-origin"></iframe>
+            <!-- Zig-zag: Macetas (texto izq - foto der) -->
+            <section class="nk-bloque nk-alt">
+                <div class="row align-items-center g-0 px-3">
+                    <div class="col-6 pe-3 text-center">
+                        <h3 class="nk-titulo">Macetas Decorativas</h3>
+                    </div>
+                    <div class="col-6">
+                        <img src="images/macetanuevo.jpg" alt="Macetas Decorativas" class="nk-foto" width="176" height="176">
+                    </div>
                 </div>
-                <p class="mt-3 mb-0 text-secondary">Juan Montalvo (San Sebastián), Latacunga - Ecuador</p>
-            </div>
+            </section>
 
-            <!-- Columna Formulario -->
-            <div class="col-md-6 ps-md-4">
-                <h3 class="fw-bold mb-3 text-dark">Escríbenos tu Pedido</h3>
-                <form class="bg-body-tertiary border border-2 border-white rounded-3 shadow-sm p-3 p-md-4">
-                    <div class="mb-3">
-                        <label for="nombre" class="form-label fw-semibold">Nombre completo:</label>
-                        <input type="text" class="form-control form-control-lg rounded-2" id="nombre" placeholder="Ej: Juan Pérez" required>
+            <!-- Velas (foto izq - texto der) -->
+            <section class="nk-bloque">
+                <div class="row align-items-center g-0 px-3">
+                    <div class="col-6">
+                        <img src="images/velas.jpg" alt="Velas Artesanales" class="nk-foto" width="176" height="176" loading="lazy">
                     </div>
-                    <div class="mb-3">
-                        <label for="telefono" class="form-label fw-semibold">Teléfono / WhatsApp:</label>
-                        <input type="tel" class="form-control form-control-lg rounded-2" id="telefono" placeholder="Ej: 0991234567" required>
+                    <div class="col-6 ps-3 text-center">
+                        <h3 class="nk-titulo">Velas Artesanales</h3>
                     </div>
-                    <div class="mb-4">
-                        <label for="mensaje" class="form-label fw-semibold">Mensaje o Cotización:</label>
-                        <textarea class="form-control form-control-lg rounded-2" id="mensaje" rows="3" placeholder="¿Qué tipo de maceta o evento necesitas?" required></textarea>
+                </div>
+            </section>
+
+            <!-- Recuerdos (texto izq - foto der) -->
+            <section class="nk-bloque nk-alt">
+                <div class="row align-items-center g-0 px-3">
+                    <div class="col-6 pe-3 text-center">
+                        <h3 class="nk-titulo">Recuerdos de Boda y Cumpleaños</h3>
                     </div>
-                    <button type="submit" class="btn btn-success btn-lg w-100 fw-bold rounded-2 py-3">Enviar Consulta</button>
+                    <div class="col-6">
+                        <img src="images/cumpleanos.jpg" alt="Recuerdos de Boda y Cumpleaños" class="nk-foto" width="176" height="176" loading="lazy">
+                    </div>
+                </div>
+            </section>
+
+            <!-- Corporativos (foto izq - texto der) -->
+            <section class="nk-bloque">
+                <div class="row align-items-center g-0 px-3">
+                    <div class="col-6">
+                        <img src="images/detallescorporativos.jpg" alt="Detalles Corporativos" class="nk-foto" width="176" height="176" loading="lazy">
+                    </div>
+                    <div class="col-6 ps-3 text-center">
+                        <h3 class="nk-titulo">Detalles Corporativos</h3>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Mini Jardines (texto izq - foto der) -->
+            <section class="nk-bloque nk-alt">
+                <div class="row align-items-center g-0 px-3">
+                    <div class="col-6 pe-3 text-center">
+                        <h3 class="nk-titulo">Mini Jardines</h3>
+                    </div>
+                    <div class="col-6">
+                        <img src="images/minijardin.jpg" alt="Mini Jardines" class="nk-foto" width="176" height="176" loading="lazy">
+                    </div>
+                </div>
+            </section>
+
+            <!-- Lista de servicios -->
+            <section class="px-3 py-4 text-center border-bottom">
+                <h2 class="nk-titulo fs-4 mb-3">Lista de Servicios</h2>
+                <ul class="list-unstyled nk-lista text-secondary mb-0">
+                    <li>Diseños personalizados a medida</li>
+                    <li>Asesoría botánica especializada</li>
+                    <li>Envíos seguros a nivel nacional</li>
+                </ul>
+            </section>
+
+            <!-- Google Maps -->
+            <section class="px-3 py-4 text-center nk-alt" style="background: var(--nk-cream);">
+                <h2 class="nk-titulo fs-4 mb-3">Google Maps</h2>
+                <div class="ratio ratio-4x3 nk-mapa overflow-hidden">
+                    <iframe title="Ubicación de Nankay en Google Maps" src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3989.3177719442842!2d-78.59667092550083!3d-0.9075877990836217!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x91d461bd1d43a1bb%3A0x2e0b77284ded7ca6!2sNankay%20-%20Arte%20en%20cemento!5e0!3m2!1ses-419!2sec!4v1792603629685!5m2!1ses-419!2sec" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="strict-origin-when-cross-origin"></iframe>
+                </div>
+                <p class="text-secondary mt-3 mb-0">Juan Montalvo (San Sebastián), Latacunga - Ecuador</p>
+            </section>
+
+            <!-- Formulario de contacto -->
+            <section class="px-3 py-4 border-bottom" id="formulario">
+                <h2 class="nk-titulo fs-4 mb-2 text-center">Cuéntanos qué deseas</h2>
+                <p class="text-secondary text-center mb-4">Llena el formulario y te responderemos por WhatsApp.</p>
+
+                <form id="nk-form" class="nk-form needs-validation" novalidate>
+                    <div class="row g-3">
+                        <div class="col-6">
+                            <label for="nombre" class="form-label">Nombre</label>
+                            <input type="text" class="form-control form-control-lg" id="nombre" autocomplete="given-name" required>
+                            <div class="invalid-feedback">Ingresa tu nombre.</div>
+                        </div>
+                        <div class="col-6">
+                            <label for="apellido" class="form-label">Apellido</label>
+                            <input type="text" class="form-control form-control-lg" id="apellido" autocomplete="family-name" required>
+                            <div class="invalid-feedback">Ingresa tu apellido.</div>
+                        </div>
+                        <div class="col-12">
+                            <label for="telefono" class="form-label">Teléfono o WhatsApp</label>
+                            <input type="tel" class="form-control form-control-lg" id="telefono" autocomplete="tel" inputmode="tel" pattern="[0-9+\s\-]{7,15}" required>
+                            <div class="invalid-feedback">Ingresa un número válido.</div>
+                        </div>
+                        <div class="col-12">
+                            <label for="correo" class="form-label">Correo electrónico <span class="text-secondary fw-normal">(opcional)</span></label>
+                            <input type="email" class="form-control form-control-lg" id="correo" autocomplete="email">
+                            <div class="invalid-feedback">Ingresa un correo válido.</div>
+                        </div>
+                        <div class="col-12">
+                            <label for="producto" class="form-label">Me interesa</label>
+                            <select class="form-select form-select-lg" id="producto" required>
+                                <option value="" selected disabled>Selecciona una opción</option>
+                                <option>Macetas Decorativas</option>
+                                <option>Velas Artesanales</option>
+                                <option>Recuerdos de Boda y Cumpleaños</option>
+                                <option>Detalles Corporativos</option>
+                                <option>Mini Jardines</option>
+                                <option>Otro</option>
+                            </select>
+                            <div class="invalid-feedback">Selecciona qué te interesa.</div>
+                        </div>
+                        <div class="col-12">
+                            <label for="fecha" class="form-label">Fecha en que lo necesitas <span class="text-secondary fw-normal">(opcional)</span></label>
+                            <input type="date" class="form-control form-control-lg" id="fecha">
+                        </div>
+                        <div class="col-12">
+                            <label for="mensaje" class="form-label">¿Qué deseas?</label>
+                            <textarea class="form-control form-control-lg" id="mensaje" rows="4" placeholder="Cantidad, colores, ideas, para qué ocasión..." required></textarea>
+                            <div class="invalid-feedback">Cuéntanos brevemente qué necesitas.</div>
+                        </div>
+                        <div class="col-12 d-grid">
+                            <button type="submit" class="btn btn-lg nk-btn-enviar">Enviar por WhatsApp</button>
+                        </div>
+                    </div>
                 </form>
-            </div>
-        </section>
+            </section>
 
-        <!-- 7. PIE DE PÁGINA (FOOTER) Y REDES SOCIALES -->
-        <footer class="row bg-dark text-white px-3 py-4 p-md-5 text-center text-md-start align-items-center border-top border-warning border-4">
-            <div class="col-md-6 mb-4 mb-md-0">
-                <h5 class="fw-bold text-warning mb-1">NANKAY - Arte en Cemento</h5>
-                <p class="small text-light opacity-75 mb-0">Atención personalizada bajo pedido. Entregas en Cotopaxi y envíos a todo el país.</p>
-            </div>
-            <div class="col-md-6 text-md-end">
-                <p class="mb-1"><strong>WhatsApp:</strong> <a class="link-light link-underline-opacity-50" href="https://wa.me/593978696410">+593 97 869 6410</a></p>
-                <p class="mb-1"><strong>Correo:</strong> <a class="link-light link-underline-opacity-50" href="mailto:nankaec@gmail.com">nankaec@gmail.com</a></p>
-                <p class="mb-0"><strong>Facebook:</strong> <a class="link-light link-underline-opacity-50" href="https://www.facebook.com/nankayec/" target="_blank" rel="noopener">Nankay</a></p>
-            </div>
-            <div class="col-12 text-center mt-4 pt-3 border-top border-secondary">
-                <small class="text-light opacity-50">&copy; 2026 Nankay. Todos los derechos reservados.</small>
-            </div>
-        </footer>
+        </div>
+    </main>
 
-    </div>
+    <!-- ============ CONTENEDOR 3: FOOTER ============ -->
+    <footer class="nk-footer text-center">
+        <div class="container py-4">
+            <h2 class="h5 fw-bold mb-3" style="color: var(--nk-gold);">Contactos - Redes Sociales</h2>
+            <div class="d-grid gap-2 mx-auto" style="max-width: 320px;">
+                <a class="btn btn-lg nk-btn-wa" href="https://wa.me/593978696410" target="_blank" rel="noopener">WhatsApp: +593 97 869 6410</a>
+                <a class="btn btn-lg nk-btn-fb" href="https://www.facebook.com/nankayec/" target="_blank" rel="noopener">Facebook: Nankay</a>
+            </div>
+            <p class="small mt-3 mb-0 opacity-75">Nankay - Arte en cemento y plantas ornamentales</p>
+        </div>
+    </footer>
 
     <!-- Bootstrap 5.3 JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
+    <!-- Formulario: valida y abre WhatsApp con el mensaje ya escrito -->
+    <script>
+        (function () {
+            var form = document.getElementById('nk-form');
+            var fecha = document.getElementById('fecha');
+            fecha.min = new Date().toISOString().split('T')[0];
+
+            form.addEventListener('submit', function (e) {
+                e.preventDefault();
+                form.classList.add('was-validated');
+                if (!form.checkValidity()) return;
+
+                var v = function (id) { return document.getElementById(id).value.trim(); };
+                var lineas = [
+                    'Hola Nankay, quisiera hacer una consulta.',
+                    '',
+                    'Nombre: ' + v('nombre') + ' ' + v('apellido'),
+                    'Teléfono: ' + v('telefono')
+                ];
+                if (v('correo')) lineas.push('Correo: ' + v('correo'));
+                lineas.push('Me interesa: ' + v('producto'));
+                if (v('fecha')) lineas.push('Fecha requerida: ' + v('fecha'));
+                lineas.push('', 'Detalle: ' + v('mensaje'));
+
+                window.open('https://wa.me/593978696410?text=' + encodeURIComponent(lineas.join('\n')), '_blank', 'noopener');
+            });
+        })();
+    </script>
 </body>
 </html>
