@@ -242,7 +242,7 @@
             }
 
             /* Producto: imagen arriba, título abajo */
-            .nk-bloque { display: flex; align-items: center; justify-content: center; }
+            .nk-bloque { display: flex; align-items: flex-start; justify-content: center; }
             .nk-bloque .row { width: 100%; flex-direction: column; flex-wrap: nowrap; gap: 1.1rem; padding: 0 !important; }
             .nk-bloque.nk-alt .row { flex-direction: column-reverse; }
             .nk-bloque .row > * { width: 100%; padding: 0 !important; }
@@ -257,6 +257,42 @@
 
             /* Footer: botones lado a lado */
             .nk-footer .d-grid { grid-template-columns: 1fr 1fr; max-width: 600px !important; }
+            .nk-footer .btn { font-size: 1rem; white-space: nowrap; }
+        }
+
+        /* =====================================================
+           PORTÁTIL / COMPUTADORA (992px en adelante).
+           Suma cambios sobre el diseño de tablet y celular.
+           ===================================================== */
+        @media (min-width: 992px) {
+
+            /* Cuadrícula de 6 columnas: productos de a 2 (3 por fila), mapa y formulario de a 3 (lado a lado) */
+            main > .container { grid-template-columns: repeat(6, 1fr); gap: 1.5rem; }
+            main .nk-bloque,
+            main .nk-servicios { grid-column: span 2; }
+
+            .nk-banner { padding: 3rem 2rem; }
+            .nk-banner-titulo { font-size: 3.6rem; }
+
+            /* Mapa (izquierda) y formulario (derecha) */
+            main .nk-sec-mapa,
+            main .nk-sec-form {
+                grid-column: span 3;
+                max-width: none;
+                justify-self: stretch;
+            }
+            main .nk-sec-mapa { display: flex; flex-direction: column; }
+            main .nk-sec-mapa .ratio { flex: 1 1 auto; min-height: 320px; }
+            main .nk-sec-mapa .ratio::before { display: none; }
+
+            .nk-footer .d-grid { max-width: 700px !important; }
+        }
+
+        /* Pantallas muy grandes: mismo ancho que xl para que no se estire */
+        @media (min-width: 1400px) {
+            .nk-header .container,
+            main > .container,
+            .nk-footer .container { max-width: 1140px; }
         }
     </style>
 </head>
